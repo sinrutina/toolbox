@@ -1,4 +1,5 @@
  #!/bin/bash
+ # Pg dump of heroku and copy to another server
 source_heroku_app="$1"
 dest_url="$2"
 option="${3-n}"
