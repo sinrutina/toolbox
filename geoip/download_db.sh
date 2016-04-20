@@ -22,9 +22,9 @@ fi
 if [ $option = "-d" ]
 then
   echo "==== Downloading db ===="
-  ssh -t $server_address "mkdir -p $server_shared_folder/geoip &&
-      curl -o $server_shared_folder/geoip/database.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz &&
-      gunzip $server_shared_folder/geoip/database.mmdb.gz"
+  ssh -t $server_address "mkdir -p $server_shared_folder/lib/geoip &&
+      curl -o $server_shared_folder/lib/geoip/database.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz &&
+      gunzip $server_shared_folder/lib/geoip/database.mmdb.gz"
 fi
 
 if [ $option = "-u" ]
@@ -58,10 +58,10 @@ ProductIds GeoLite2-Country
 
   cron="29 9 * * 5 $(which geoipupdate)"
   echo '===== Creating cronfile ====='
-  cron_file="$server_shared_folder/geoip/update_cron"
+  cron_file="$server_shared_folder/lib/geoip/update_cron"
   ssh -t $server_address "touch $cron_file &&
     crontab -l > $cron_file &&
-    echo $cron >> $cron_file && crontab $cron_file"
+    echo $cron >> $cron_file && crontab $cron_file && rm $cron_file"
 
   echo '===== Done ====='
 fi
